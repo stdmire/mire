@@ -1,0 +1,57 @@
+cmake_minimum_required(VERSION 3.28)
+project(mire LANGUAGES CXX)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+file(GLOB CORE_SRC "core/*.cpp" "core/*.h")
+file(GLOB UI_SRC "ui/*.cpp" "ui/*.h")
+file(GLOB SRC "*.cpp" "*.h")
+
+add_library(mire STATIC ${CORE_SRC} ${UI_SRC} ${SRC})
+target_compile_features(mire PRIVATE cxx_std_17)
+
+set(VENDOR_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../vendor")
+
+set(SDL_VERSION "2.30.6")
+set(SDL_SOURCE_DIR "${VENDOR_DIR}/SDL2-${SDL_VERSION}")
+
+if(NOT EXISTS ${SDL_SOURCE_DIR})
+    set(SDL_URL "https://github.com/libsdl-org/SDL/releases/download/release-${SDL_VERSION}/SDL2-${SDL_VERSION}.tar.gz")
+    set(SDL_ARCHIVE "${CMAKE_BINARY_DIR}/sdl.tar.gz")
+
+    message(STATUS "SDL not found. Downloading ${SDL_URL}")
+    file(DOWNLOAD ${SDL_URL} ${SDL_ARCHIVE})
+
+    execute_process(
+        COMMAND ${CMAKE_COMMAND} -E tar xzf ${SDL_ARCHIVE}
+        WORKING_DIRECTORY ${VENDOR_DIR}
+    )
+endif()
+
+set(SDL_TTF_VERSION "2.22.0")
+set(SDL_TTF_SOURCE_DIR "${VENDOR_DIR}/SDL2_ttf-${SDL_TTF_VERSION}")
+
+if(NOT EXISTS ${SDL_TTF_SOURCE_DIR})
+    set(SDL_TTF_URL "https://github.com/libsdl-org/SDL_ttf/releases/download/release-${SDL_TTF_VERSION}/SDL2_ttf-${SDL_TTF_VERSION}.tar.gz")
+    set(SDL_TTF_ARCHIVE "${CMAKE_BINARY_DIR}/sdlttf.tar.gz")
+
+    message(STATUS "SDL TTF not found. Downloading ${SDL_TTF_URL}")
+    file(DOWNLOAD ${SDL_TTF_URL} ${SDL_TTF_ARCHIVE})
+
+    execute_process(
+        COMMAND ${CMAKE_COMMAND} -E tar xzf ${SDL_TTF_ARCHIVE}
+        WORKING_DIRECTORY ${VENDOR_DIR}
+    )
+endif()
+
+set(JSON_HEADER "vendor/nlohmann/json.hpp")
+if(NOT EXISTS ${JSON_HEADER})
+    set(JSON_URL "https://github.com/nlohmann/json/releases/download/v3.11.2/json.hpp")
+    message(STATUS "nlohmann/json not found. Downloading ${JSON_URL}...")
+    file(DOWNLOAD ${JSON_URL} ${JSON_HEADER})
+endif()
+
+add_subdirectory(${SDL_SOURCE_DIR} ${CMAKE_BINARY_DIR}/SDL_build)
+add_subdirectory(${SDL_TTF_SOURCE_DIR} ${CMAKE_BINARY_DIR}/SDL_TTF_build)
+include_directories(BEFORE . ${VENDOR_DIR} ${SDL_SOURCE_DIR}/include ${SDL_TTF_SOURCE_DIR}/include)
+

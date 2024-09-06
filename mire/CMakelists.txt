@@ -53,5 +53,5 @@ endif()
 
 add_subdirectory(${SDL_SOURCE_DIR} ${CMAKE_BINARY_DIR}/SDL_build)
 add_subdirectory(${SDL_TTF_SOURCE_DIR} ${CMAKE_BINARY_DIR}/SDL_TTF_build)
-include_directories(BEFORE . ${VENDOR_DIR} ${SDL_SOURCE_DIR}/include ${SDL_TTF_SOURCE_DIR}/include)
+include_directories(BEFORE . ${VENDOR_DIR} ${SDL_SOURCE_DIR}/include ${SDL_TTF_SOURCE_DIR})
 

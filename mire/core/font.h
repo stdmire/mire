@@ -3,6 +3,7 @@
 #include <memory>
 #include <string>
 
+namespace core {
 class Font {
 public:
     Font(const std::string &filePath, int fontSize);
@@ -18,3 +19,4 @@ private:
 
     bool LoadFont();
 };
+} // namespace core

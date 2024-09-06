@@ -9,7 +9,7 @@
 int main() {
     log::out("Starting the app kontol");
     core::Game app;
-    auto menuScene = std::unique_ptr<MenuScene>();
+    auto menuScene = std::make_unique<MenuScene>();
     app._currentScene = std::move(menuScene);
 
     app.Run();

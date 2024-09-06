@@ -1,8 +1,8 @@
-#include "Label.h"
-#include "Font.h" // Assuming Font class provides font management
+#include "label.h"
+#include "core/font.h"
 #include <SDL_ttf.h>
 
-Label::Label(const std::string &text, const SDL_Color &color, int x, int y, std::shared_ptr<Font> font) :
+Label::Label(const std::string &text, const SDL_Color &color, int x, int y, std::shared_ptr<core::Font> font) :
         text_(text), color_(color), x_(x), y_(y), font_(font), texture_(nullptr) {
     rect_.x = x_;
     rect_.y = y_;

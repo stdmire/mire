@@ -6,7 +6,7 @@
 
 class Label {
 public:
-    Label(const std::string &text, const SDL_Color &color, int x, int y, std::shared_ptr<Font> font);
+    Label(const std::string &text, const SDL_Color &color, int x, int y, std::shared_ptr<core::Font> font);
     ~Label();
 
     // Function to render the label
@@ -23,7 +23,7 @@ private:
     SDL_Color color_;
     int x_, y_;
 
-    std::shared_ptr<Font> font_; // Use shared pointer for font management
+    std::shared_ptr<core::Font> font_; // Use shared pointer for font management
     SDL_Texture *texture_; // Texture to render the text
     SDL_Rect rect_; // Rectangle to hold text dimensions
 

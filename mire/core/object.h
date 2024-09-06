@@ -16,6 +16,8 @@ public:
 
     virtual void Translate(const Vector3 &offset);
 
+    ~BaseObject();
+
 protected:
     BaseObject(const char *name);
     bool operator==(const BaseObject &other) const {

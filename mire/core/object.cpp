@@ -17,7 +17,11 @@ BaseObject::BaseObject(const char *name) {
     _id = _name + "-" + std::to_string(msSinceEpoch.count());
     _layer = "Default";
 
-    log::info("object with name", _name);
+    log::info("object", _name, "created successfully");
+}
+
+BaseObject::~BaseObject() {
+    log::info("object", _name, "deleted successfully");
 }
 
 void BaseObject::Translate(const Vector3 &offset) {

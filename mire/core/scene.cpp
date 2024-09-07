@@ -3,6 +3,7 @@
 #include "core/log.h"
 #include "core/object.h"
 
+#include "scene.h"
 #include <iostream>
 
 namespace core {
@@ -12,7 +13,7 @@ void Scene::PushObject(std::shared_ptr<BaseObject> obj) {
     _objects.push_back(obj);
 }
 
-void Scene::Render(std::shared_ptr<SDL_Renderer> w) {
+void Scene::Render(const Renderer &w) {
     for (auto &layer : _layers) {
         for (auto &object : _objects) {
             if (object->_layer == layer.Name) {
@@ -21,6 +22,15 @@ void Scene::Render(std::shared_ptr<SDL_Renderer> w) {
             }
         }
     }
+    return;
+}
+
+void Scene::Initialize(const Renderer &renderer) {
+    for (auto &object : _objects) {
+        log::info("initializing", object->_name);
+        object->OnInit(renderer);
+    }
+
     return;
 }
 

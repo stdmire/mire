@@ -24,20 +24,20 @@ BaseObject::~BaseObject() {
     log::info("object", _name, "deleted successfully");
 }
 
-void BaseObject::Translate(const Vector3 &offset) {
+void BaseObject::Translate(const Vector2 &offset) {
     _position += offset;
 }
 
 // Setter methods
-void BaseObject::setPosition(const Vector3 &position) {
+void BaseObject::setPosition(const Vector2 &position) {
     _position = position;
 }
 
-void BaseObject::setRotation(const Vector3 &rotation) {
+void BaseObject::setRotation(const Vector2 &rotation) {
     _rotation = rotation;
 }
 
-void BaseObject::setScale(const Vector3 &scale) {
+void BaseObject::setScale(const Vector2 &scale) {
     _scale = scale;
 }
 
@@ -56,4 +56,33 @@ void BaseObject::setTags(const std::vector<std::string> &tags) {
 void BaseObject::setLayer(const std::string &layer) {
     _layer = layer;
 }
+
+Vector2 BaseObject::getPosition() const {
+    return _position;
+}
+
+Vector2 BaseObject::getRotation() const {
+    return _rotation;
+}
+
+Vector2 BaseObject::getScale() const {
+    return _scale;
+}
+
+std::string BaseObject::getName() const {
+    return _name;
+}
+
+std::string BaseObject::getId() const {
+    return _id;
+}
+
+std::vector<std::string> BaseObject::getTags() const {
+    return _tags;
+}
+
+std::string BaseObject::getLayer() const {
+    return _layer;
+}
+
 } // namespace core

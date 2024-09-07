@@ -12,11 +12,14 @@ Game::Game() :
 
 Game::~Game() {
     isRunning = false;
+    SDL_Quit();
 }
 void Game::Run() {
     isRunning = true;
 
     log::info("running engine");
+
+    _currentScene->Initialize(renderer);
 
     SDL_Event event;
     while (isRunning) {
@@ -38,8 +41,9 @@ void Game::Run() {
         _currentScene->OnUpdate();
 
         renderer.clear();
-        renderer.RenderScene(_currentScene.get());
+        _currentScene->Render(renderer);
         renderer.present();
+        SDL_Delay(16);
     }
 }
 } // namespace core

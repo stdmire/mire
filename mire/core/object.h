@@ -1,29 +1,30 @@
 #pragma once
+#include "renderer.h"
 #include "vector.h"
 #include <SDL.h>
 
 namespace core {
 class BaseObject {
 public:
-    Vector3 getPosition() const;
-    Vector3 getRotation() const;
-    Vector3 getScale() const;
+    Vector2 getPosition() const;
+    Vector2 getRotation() const;
+    Vector2 getScale() const;
     std::string getName() const;
     std::string getId() const;
     std::vector<std::string> getTags() const;
     std::string getLayer() const;
 
-    void setPosition(const Vector3 &position);
-    void setRotation(const Vector3 &rotation);
-    void setScale(const Vector3 &scale);
+    void setPosition(const Vector2 &position);
+    void setRotation(const Vector2 &rotation);
+    void setScale(const Vector2 &scale);
     void setName(const std::string &name);
     void setId(const std::string &id);
     void setTags(const std::vector<std::string> &tags);
     void setLayer(const std::string &layer);
 
-    virtual void Translate(const Vector3 &offset);
+    virtual void Translate(const Vector2 &offset);
 
-    ~BaseObject();
+    virtual ~BaseObject() = 0;
 
 protected:
     BaseObject(const char *name);
@@ -32,12 +33,13 @@ protected:
     }
 
     friend class Scene;
-    virtual void Render(std::shared_ptr<SDL_Renderer> window) {};
+    virtual void Render(const Renderer &renderer) {};
+    virtual void OnInit(const Renderer &renderer) {};
 
 private:
-    Vector3 _position;
-    Vector3 _rotation;
-    Vector3 _scale;
+    Vector2 _position;
+    Vector2 _rotation;
+    Vector2 _scale;
     std::string _name;
     std::string _id;
     std::vector<std::string> _tags;

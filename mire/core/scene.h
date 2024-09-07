@@ -18,16 +18,18 @@ public:
     std::shared_ptr<BaseObject> GetObject(std::string name);
 
 protected:
+    virtual void OnStart() {};
     virtual void OnUpdate() {};
     virtual void OnEventUpdate(SDL_Event event) {};
     virtual void OnKeyPressed(Key){};
     virtual void OnKeyReleased(Key){};
+    virtual void Initialize(const Renderer &renderer);
 
 private:
     std::string _name;
     std::vector<Layer> _layers;
     std::vector<std::shared_ptr<BaseObject>> _objects;
 
-    void Render(std::shared_ptr<SDL_Renderer> w);
+    void Render(const Renderer &renderer);
 };
 } // namespace core

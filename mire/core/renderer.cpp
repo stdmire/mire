@@ -32,10 +32,6 @@ void Renderer::present() {
     SDL_RenderPresent(sdlrenderer);
 }
 
-void Renderer::RenderScene(Scene *scene) {
-    scene->Render(_renderer);
-}
-
 // Draw a line between two points
 void Renderer::drawLine(int x1, int y1, int x2, int y2) {
     SDL_RenderDrawLine(sdlrenderer, x1, y1, x2, y2);

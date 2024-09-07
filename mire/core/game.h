@@ -1,4 +1,5 @@
 #pragma once
+#include "renderer.h"
 #include "scene.h"
 #include "window.h"
 
@@ -12,9 +13,14 @@ public:
     ~Game();
     void Run();
     std::unique_ptr<Scene> _currentScene;
-    std::unique_ptr<Window> _window;
 
     bool isRunning = false;
+    Window _window;
+    Renderer renderer;
+
+    void initialize() {
+        renderer = Renderer(_window);
+    }
 };
 
 } // namespace core

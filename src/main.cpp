@@ -7,7 +7,7 @@
 #include <memory>
 
 int main() {
-    log::out("Starting the app kontol");
+    log::out("Starting the app");
     core::Game app;
     auto menuScene = std::make_unique<MenuScene>();
     app._currentScene = std::move(menuScene);

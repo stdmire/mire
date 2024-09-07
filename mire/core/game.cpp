@@ -4,12 +4,10 @@
 #include "game.h"
 
 namespace core {
-Game::Game() {
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        log::out("SDL could not initialize! SDL_Error: ", SDL_GetError());
-    }
-
-    _window = std::make_unique<Window>(800, 600, "MIRE Example");
+Game::Game() :
+        _window(800, 600, "MIRE Example"), renderer(_window) {
+    log::info("Initializing game");
+    initialize();
 }
 
 Game::~Game() {
@@ -17,10 +15,6 @@ Game::~Game() {
 }
 void Game::Run() {
     isRunning = true;
-    std::shared_ptr<SDL_Renderer> renderer(SDL_CreateRenderer(_window->window.get(), -1, SDL_RENDERER_ACCELERATED), SDL_DestroyRenderer);
-    if (!renderer) {
-        log::out("Renderer could not be created! SDL_Error: ", SDL_GetError());
-    }
 
     log::info("running engine");
 
@@ -43,9 +37,9 @@ void Game::Run() {
 
         _currentScene->OnUpdate();
 
-        SDL_RenderClear(renderer.get());
-        _currentScene->Render(renderer);
-        SDL_RenderPresent(renderer.get());
+        renderer.clear();
+        renderer.RenderScene(_currentScene.get());
+        renderer.present();
     }
 }
 } // namespace core

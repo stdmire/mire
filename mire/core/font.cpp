@@ -17,7 +17,6 @@ Font::Font(const std::string &filePath, int fontSize) :
 }
 
 Font::~Font() {
-    // No need for manual deletion, unique_ptr will handle it
 }
 
 TTF_Font *Font::GetFont() const {

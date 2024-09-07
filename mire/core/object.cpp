@@ -28,4 +28,32 @@ void BaseObject::Translate(const Vector3 &offset) {
     _position += offset;
 }
 
+// Setter methods
+void BaseObject::setPosition(const Vector3 &position) {
+    _position = position;
+}
+
+void BaseObject::setRotation(const Vector3 &rotation) {
+    _rotation = rotation;
+}
+
+void BaseObject::setScale(const Vector3 &scale) {
+    _scale = scale;
+}
+
+void BaseObject::setName(const std::string &name) {
+    _name = name;
+}
+
+void BaseObject::setId(const std::string &id) {
+    _id = id;
+}
+
+void BaseObject::setTags(const std::vector<std::string> &tags) {
+    _tags = tags;
+}
+
+void BaseObject::setLayer(const std::string &layer) {
+    _layer = layer;
+}
 } // namespace core

@@ -6,6 +6,7 @@
 
 namespace core {
 class Scene {
+    friend class Renderer;
     friend class Game;
 
 public:

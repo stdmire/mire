@@ -24,15 +24,6 @@ BaseObject::~BaseObject() {
     log::info("object", _name, "deleted successfully");
 }
 
-void BaseObject::Translate(const Vector2 &offset) {
-    _position += offset;
-}
-
-// Setter methods
-void BaseObject::setPosition(const Vector2 &position) {
-    _position = position;
-}
-
 void BaseObject::setRotation(const Vector2 &rotation) {
     _rotation = rotation;
 }
@@ -55,10 +46,6 @@ void BaseObject::setTags(const std::vector<std::string> &tags) {
 
 void BaseObject::setLayer(const std::string &layer) {
     _layer = layer;
-}
-
-Vector2 BaseObject::getPosition() const {
-    return _position;
 }
 
 Vector2 BaseObject::getRotation() const {

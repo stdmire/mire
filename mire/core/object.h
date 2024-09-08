@@ -6,7 +6,6 @@
 namespace core {
 class BaseObject {
 public:
-    Vector2 getPosition() const;
     Vector2 getRotation() const;
     Vector2 getScale() const;
     std::string getName() const;
@@ -22,9 +21,9 @@ public:
     void setTags(const std::vector<std::string> &tags);
     void setLayer(const std::string &layer);
 
-    virtual void Translate(const Vector2 &offset);
-
     virtual ~BaseObject() = 0;
+
+    Rect rect;
 
 protected:
     BaseObject(const char *name);
@@ -37,7 +36,6 @@ protected:
     virtual void OnInit(const Renderer &renderer) {};
 
 private:
-    Vector2 _position;
     Vector2 _rotation;
     Vector2 _scale;
     std::string _name;

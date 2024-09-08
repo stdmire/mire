@@ -8,6 +8,8 @@ namespace core {
 class Rect {
 public:
     Rect(Vector2 pos, int width = 0, int height = 0);
+    Rect() :
+            width(0), height(0), pos(0, 0) {};
 
     int getWidth() const;
     int getHeight() const;

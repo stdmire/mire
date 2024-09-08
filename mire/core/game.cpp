@@ -37,10 +37,11 @@ void Game::Run() {
                 _currentScene->OnKeyReleased((Key)event.key.keysym.sym);
             }
         }
-        SDL_SetRenderDrawColor(renderer.getRenderer(), 96, 128, 255, 255);
+        SDL_SetRenderDrawColor(renderer.getRenderer(), 0, 0, 0, 255);
+        renderer.clear();
+
         _currentScene->OnUpdate();
 
-        renderer.clear();
         _currentScene->Render(renderer);
         renderer.present();
         SDL_Delay(16);

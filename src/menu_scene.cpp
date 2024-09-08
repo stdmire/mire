@@ -5,14 +5,5 @@
 #include "core/window.h"
 #include <filesystem>
 
-void MenuScene::OnUpdate() {
-}
-
 void MenuScene::OnEventUpdate(SDL_Event event) {
-}
-
-void MenuScene::OnKeyPressed(core::Key key) {
-}
-
-void MenuScene::OnKeyReleased(core::Key key) {
 }

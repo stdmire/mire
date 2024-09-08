@@ -1,0 +1,17 @@
+#pragma once
+
+#include "color.h"
+#include "control.h"
+#include "core.h"
+#include "font.h"
+#include "game.h"
+#include "layer.h"
+#include "log.h"
+#include "object.h"
+#include "rect.h"
+#include "renderer.h"
+#include "scene.h"
+#include "texture.h"
+#include "utils.h"
+#include "vector.h"
+#include "window.h"

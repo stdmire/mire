@@ -1,4 +1,5 @@
 #pragma once
+#include "color.h"
 #include "renderer.h"
 #include "vector.h"
 #include <SDL.h>
@@ -6,14 +7,17 @@
 namespace core {
 class BaseObject {
 public:
-    Vector2 getRotation() const;
-    Vector2 getScale() const;
+    virtual ~BaseObject() = 0;
+
+    bool getVisibility() const;
+    std::string getLayer() const;
     std::string getName() const;
     std::string getId() const;
     std::vector<std::string> getTags() const;
-    std::string getLayer() const;
+    Vector2 getRotation() const;
+    Vector2 getScale() const;
 
-    void setPosition(const Vector2 &position);
+    void setVisibility(bool isvisible);
     void setRotation(const Vector2 &rotation);
     void setScale(const Vector2 &scale);
     void setName(const std::string &name);
@@ -21,7 +25,8 @@ public:
     void setTags(const std::vector<std::string> &tags);
     void setLayer(const std::string &layer);
 
-    virtual ~BaseObject() = 0;
+    virtual void OnClick() {};
+    virtual void OnClickReleased() {};
 
     Rect rect;
 
@@ -42,6 +47,42 @@ private:
     std::string _id;
     std::vector<std::string> _tags;
     std::string _layer;
+    bool _isVisible = true;
+};
+
+class Object2D : public BaseObject {
+public:
+    Object2D() :
+            BaseObject("Object2d") {
+        syncrect();
+    }
+
+    void Render(const Renderer &r) override {
+        SDL_SetRenderDrawColor(r.getRenderer(), color.getR(), color.getG(), color.getG(), color.getA());
+        SDL_RenderFillRect(r.getRenderer(), &sdlrect);
+    }
+
+    void setRect(const Rect &r) {
+        rect = r;
+        syncrect();
+    }
+
+    void SetPosition(const Vector2 &pos) {
+        rect.pos = pos;
+        syncrect();
+    }
+
+    Color color;
+
+private:
+    void syncrect() {
+        sdlrect.x = rect.pos.x;
+        sdlrect.y = rect.pos.y;
+        sdlrect.w = rect.getWidth();
+        sdlrect.h = rect.getHeight();
+    }
+
+    SDL_Rect sdlrect;
 };
 
 } // namespace core

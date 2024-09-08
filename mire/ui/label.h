@@ -1,10 +1,6 @@
 #pragma once
 
-#include "core/color.h"
-#include "core/font.h"
-#include "core/log.h"
-#include "core/object.h"
-#include "core/texture.h"
+#include "core/core.h"
 #include <SDL2/SDL.h>
 #include <SDL_ttf.h>
 
@@ -15,7 +11,6 @@ public:
     Label(std::string text) :
             BaseObject("label"),
             _text(text) {
-        int width, height;
         TTF_SizeText(font.GetFont(), _text.c_str(), &width, &height);
         rect.setWidth(width);
         rect.setHeight(height);
@@ -26,11 +21,26 @@ public:
 
     void setText(const std::string &text) {
         _text = text;
+        TTF_SizeText(font.GetFont(), _text.c_str(), &width, &height);
+        rect.setWidth(width);
+        rect.setHeight(height);
+        sdlrect = SDL_Rect{
+            int(rect.pos.x), int(rect.pos.y), rect.getWidth(), rect.getHeight()
+        };
+    }
+
+    const std::string &getText() {
+        return _text;
     }
 
     void Render(const core::Renderer &renderer) override {
         // log::out("meki");
-        SDL_Surface *surf = TTF_RenderText_Blended(font.GetFont(), _text.c_str(), { 255, 255, 255, 255 });
+        SDL_Surface *surf = TTF_RenderText_Blended(font.GetFont(), _text.c_str(), {
+                                                                                          (unsigned char)core::COLOR_Slate800.getR(),
+                                                                                          (unsigned char)core::COLOR_Slate800.getG(),
+                                                                                          (unsigned char)core::COLOR_Slate800.getB(),
+                                                                                          (unsigned char)core::COLOR_Slate800.getA(),
+                                                                                  });
         if (!surf) {
             log::info("ERROR TTF_RenderText_Blended");
             log::err(SDL_GetError());
@@ -70,6 +80,7 @@ public:
 
 private:
     std::string _text;
+    int width, height;
     SDL_Rect sdlrect;
 
     void setRect() {

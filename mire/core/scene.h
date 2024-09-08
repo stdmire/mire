@@ -32,5 +32,22 @@ private:
     std::vector<std::shared_ptr<BaseObject>> _objects;
 
     void Render(const Renderer &renderer);
+    void OnMouseClick(int x, int y) {
+        for (auto &object : _objects) {
+            if (object->rect.contains(Vector2(x, y))) {
+                object->OnClick();
+            }
+        }
+        return;
+    }
+
+    void OnMouseClickReleased(int x, int y) {
+        for (auto &object : _objects) {
+            if (object->rect.contains(Vector2(x, y))) {
+                object->OnClickReleased();
+            }
+        }
+        return;
+    }
 };
 } // namespace core

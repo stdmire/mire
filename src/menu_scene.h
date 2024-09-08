@@ -1,18 +1,21 @@
 #pragma once
 
-#include "core/control.h"
-#include "core/scene.h"
-#include "ui/label.h"
-#include <SDL.h>
-#include <memory>
+#include "mire.h"
 
 class MenuScene : public core::Scene {
 public:
     MenuScene() :
             Scene("Menu") {
         label = std::make_shared<ui::Label>("Start Game");
+        input = std::make_shared<ui::Input>("myinput");
+        btn = std::make_shared<ui::Button>("btn");
 
+        btn->SetPosition(core::Vector2(100, 100));
+        btn->background.color = core::Color();
+
+        PushObject(btn);
         PushObject(label);
+        PushObject(input);
     }
     ~MenuScene() {
 
@@ -21,6 +24,7 @@ public:
     void OnUpdate() override {
         label->Move(dir);
     }
+
     void OnKeyPressed(core::Key k) override {
         int speed = 10;
         if (k == core::K_w) {
@@ -35,7 +39,15 @@ public:
         if (k == core::K_d) {
             dir.x = speed;
         }
+
+        if (k == core::K_l) {
+            label->setText("change text");
+        }
+        if (k == core::K_p) {
+            label->setText("not changed");
+        }
     }
+
     void OnKeyReleased(core::Key k) override {
         if (k == core::K_w || k == core::K_s) {
             dir.y = 0;
@@ -47,11 +59,15 @@ public:
             label->Move(dir);
         }
     }
-    void OnEventUpdate(SDL_Event event) override;
+    void OnEventUpdate(SDL_Event event) override {
+        input->OnTypeHandler(event);
+    }
 
     int speedX = 0;
     int speedY = 0;
 
     std::shared_ptr<ui::Label> label;
+    std::shared_ptr<ui::Input> input;
+    std::shared_ptr<ui::Button> btn;
     core::Vector2 dir;
 };

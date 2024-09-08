@@ -3,7 +3,7 @@
 #include "log.h"
 
 namespace core {
-std::string GetFullPath(const char *path) {
+inline std::string GetFullPath(const char *path) {
 #ifdef ROOT_DIR
 #define STR(str) #str
 #define STRING(str) STR(str)

@@ -24,6 +24,10 @@ BaseObject::~BaseObject() {
     log::info("object", _name, "deleted successfully");
 }
 
+void BaseObject::setVisibility(bool isvisible) {
+    _isVisible = isvisible;
+}
+
 void BaseObject::setRotation(const Vector2 &rotation) {
     _rotation = rotation;
 }
@@ -66,6 +70,10 @@ std::string BaseObject::getId() const {
 
 std::vector<std::string> BaseObject::getTags() const {
     return _tags;
+}
+
+bool BaseObject::getVisibility() const {
+    return _isVisible;
 }
 
 std::string BaseObject::getLayer() const {

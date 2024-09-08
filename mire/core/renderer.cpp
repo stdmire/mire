@@ -18,41 +18,41 @@ Renderer::Renderer(const Window &window) {
 // Destructor: Destroys the SDL_Renderer
 Renderer::~Renderer() {
     if (_renderer) {
-        SDL_DestroyRenderer(sdlrenderer);
+        SDL_DestroyRenderer(_renderer.get());
     }
 }
 
 // Clear the screen with the current drawing color
 void Renderer::clear() {
-    SDL_RenderClear(sdlrenderer);
+    SDL_RenderClear(_renderer.get());
 }
 
 // Present the rendered image to the screen
 void Renderer::present() {
-    SDL_RenderPresent(sdlrenderer);
+    SDL_RenderPresent(_renderer.get());
 }
 
 // Draw a line between two points
 void Renderer::drawLine(int x1, int y1, int x2, int y2) {
-    SDL_RenderDrawLine(sdlrenderer, x1, y1, x2, y2);
+    SDL_RenderDrawLine(_renderer.get(), x1, y1, x2, y2);
 }
 
 // Render a texture to the screen at a specified rectangle
 void Renderer::renderTexture(SDL_Texture *texture, const Rect &rect) {
     SDL_Rect sdlRect = rect.toSDLRect();
-    SDL_RenderCopy(sdlrenderer, texture, nullptr, &sdlRect);
+    SDL_RenderCopy(_renderer.get(), texture, nullptr, &sdlRect);
 }
 
 // Render a portion of a texture with scaling
 void Renderer::renderTexture(SDL_Texture *texture, const Rect &srcRect, const Rect &destRect) {
     SDL_Rect srcSDLRect = srcRect.toSDLRect();
     SDL_Rect destSDLRect = destRect.toSDLRect();
-    SDL_RenderCopy(sdlrenderer, texture, &srcSDLRect, &destSDLRect);
+    SDL_RenderCopy(_renderer.get(), texture, &srcSDLRect, &destSDLRect);
 }
 
 // Get the raw SDL_Renderer object
 SDL_Renderer *Renderer::getRenderer() const {
-    return sdlrenderer;
+    return _renderer.get();
 }
 
 // Check for renderer-related errors

@@ -23,7 +23,6 @@ public:
 
 private:
     std::shared_ptr<SDL_Renderer> _renderer;
-    SDL_Renderer *sdlrenderer;
 
     void checkRendererError() const;
 };

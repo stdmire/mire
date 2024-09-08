@@ -45,4 +45,34 @@ void info(Args... args) {
     out(j);
 }
 
+inline void err(const char *message) {
+    nlohmann::json j;
+    j["ERROR"] = message;
+    out(j);
+}
+
+template <typename... Args>
+void err(Args... args) {
+    std::ostringstream oss;
+    auto add_to_stream = [&](const auto &arg) {
+        if constexpr (sizeof...(args) > 0) {
+            oss << arg << " ";
+        } else {
+            oss << arg;
+        }
+    };
+
+    (add_to_stream(args), ...);
+
+    std::string result = oss.str();
+
+    if (!result.empty()) {
+        result.erase(result.size() - 1);
+    }
+
+    nlohmann::json j;
+    j["ERROR"] = result;
+    out(j);
+}
+
 } // namespace log

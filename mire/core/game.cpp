@@ -37,7 +37,7 @@ void Game::Run() {
                 _currentScene->OnKeyReleased((Key)event.key.keysym.sym);
             }
         }
-
+        SDL_SetRenderDrawColor(renderer.getRenderer(), 96, 128, 255, 255);
         _currentScene->OnUpdate();
 
         renderer.clear();

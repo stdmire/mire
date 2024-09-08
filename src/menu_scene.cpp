@@ -5,10 +5,6 @@
 #include "core/window.h"
 #include <filesystem>
 
-MenuScene::MenuScene() :
-        core::Scene("Menu") {
-}
-
 void MenuScene::OnUpdate() {
 }
 

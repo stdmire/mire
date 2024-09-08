@@ -23,7 +23,7 @@ void Rect::setHeight(int height) {
 
 // Convert to SDL_Rect
 SDL_Rect Rect::toSDLRect() const {
-    SDL_Rect rect = { pos.x, pos.y, width, height };
+    SDL_Rect rect = { int(pos.x), int(pos.y), int(width), int(height) };
     return rect;
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "control.h"
+#include "core/renderer.h"
 #include "layer.h"
 #include "object.h"
 #include <SDL.h>

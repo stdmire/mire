@@ -1,8 +1,5 @@
 #pragma once
-#include "color.h"
-#include "object.h"
 #include "rect.h"
-#include "scene.h"
 #include "window.h"
 #include <SDL.h>
 #include <string>

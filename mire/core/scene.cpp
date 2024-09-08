@@ -17,7 +17,7 @@ void Scene::Render(const Renderer &w) {
     for (auto &layer : _layers) {
         for (auto &object : _objects) {
             if (object->_layer == layer.Name) {
-                log::info("drawing object at layer: ", object->_layer);
+                log::info("drawing object", object->_name, "at layer: ", object->_layer);
                 object->Render(w);
             }
         }

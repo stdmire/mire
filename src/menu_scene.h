@@ -1,12 +1,21 @@
 #pragma once
 
 #include "core/scene.h"
+#include "ui/label.h"
 #include <SDL.h>
+#include <memory>
 
 class MenuScene : public core::Scene {
 public:
-    MenuScene();
-    ~MenuScene() {};
+    MenuScene() :
+            Scene("Menu") {
+        auto label = std::make_shared<ui::Label>("my label");
+
+        PushObject(label);
+    }
+    ~MenuScene() {
+
+    };
 
     void OnUpdate() override;
     void OnKeyPressed(core::Key) override;

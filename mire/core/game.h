@@ -4,7 +4,7 @@
 #include "window.h"
 
 #include <SDL.h>
-
+#include <SDL_ttf.h>
 namespace core {
 inline double deltatime = 0;
 class Game {
@@ -19,7 +19,10 @@ public:
     Renderer renderer;
 
     void initialize() {
-        renderer = Renderer(_window);
+        if (TTF_Init() != 0) {
+            log::out("TTF_Init");
+            SDL_Quit();
+        }
     }
 };
 

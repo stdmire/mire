@@ -1,4 +1,5 @@
 #pragma once
+#include "vector.h"
 #include <SDL.h>
 #include <iostream>
 

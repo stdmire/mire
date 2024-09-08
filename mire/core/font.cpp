@@ -13,7 +13,7 @@ Font::Font(const std::string &filePath, int fontSize) :
         _filePath(filePath), _fontSize(fontSize), _font(nullptr, FontDeleter) {
     _fullfilepath = core::GetFullPath(_filePath.c_str());
     if (!LoadFont()) {
-        log::out("Failed to load font: ", _filePath, " with size: ", _fontSize);
+        log::out("Failed to load font: ", _fullfilepath, " with size: ", _fontSize);
     }
 }
 
@@ -21,7 +21,7 @@ Font::Font() :
         _filePath(DEFAULT_FONT_PATH), _fontSize(DEFAULT_FONT_SIZE), _font(nullptr, FontDeleter) {
     _fullfilepath = core::GetFullPath(_filePath.c_str());
     if (!LoadFont()) {
-        log::out("Failed to load font: ", _filePath, " with size: ", _fontSize, "full path:", _fullfilepath);
+        log::out("Failed to load font: ", _fullfilepath, " with size: ", _fontSize, "full path:", _fullfilepath);
     }
 }
 
@@ -40,6 +40,9 @@ void Font::SetFontSize(int fontSize) {
 
 bool Font::LoadFont() {
     _font.reset(TTF_OpenFont(_fullfilepath.c_str(), _fontSize));
+    if (_font == nullptr) {
+        log::out(TTF_GetError());
+    }
     return _font != nullptr;
 }
 } // namespace core

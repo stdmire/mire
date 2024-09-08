@@ -32,6 +32,6 @@ public:
 private:
     std::unique_ptr<SDL_Texture, void (*)(SDL_Texture *)> texture;
     std::unique_ptr<SDL_Surface, void (*)(SDL_Surface *)> surface;
-    int height;
+    int height, width;
 };
 } // namespace core

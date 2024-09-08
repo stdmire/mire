@@ -23,5 +23,6 @@ private:
     std::unique_ptr<TTF_Font, void (*)(TTF_Font *)> _font;
 
     bool LoadFont();
+    friend class Label;
 };
 } // namespace core

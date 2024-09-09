@@ -63,7 +63,6 @@ void Game::Run() {
             }
         }
         SDL_SetRenderDrawColor(renderer.getRenderer(), COLOR_Slate50.getR(), COLOR_Slate50.getG(), COLOR_Slate50.getB(), COLOR_Slate50.getA());
-        // log::out(COLOR_Slate50.getR(), COLOR_Slate50.getG(), COLOR_Slate50.getB(), COLOR_Slate50.getA());
         renderer.clear();
 
         currentscene->OnUpdate();

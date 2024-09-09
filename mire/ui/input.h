@@ -27,6 +27,12 @@ public:
         isFocus = true;
     }
 
+    void SetPosition(const core::Vector2 &pos) {
+        rect.pos = pos;
+        placeholder.rect = rect;
+        background.rect = rect;
+    }
+
     void OnTypeHandler(SDL_Event e) {
         if (e.type == SDL_TEXTINPUT && isFocus) {
             label.setText(label.getText() + e.text.text);

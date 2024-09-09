@@ -13,6 +13,14 @@ public:
         btn->SetPosition(core::Vector2(100, 100));
         btn->background.color = core::Color();
 
+        btn->SetOnClick([&]() {
+            label->SetPosition(core::Vector2(200, 200));
+        });
+
+        btn->SetOnClickReleased([&]() {
+            label->SetPosition(core::Vector2(300, 100));
+        });
+
         PushObject(btn);
         PushObject(label);
         PushObject(input);

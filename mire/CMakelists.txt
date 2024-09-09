@@ -44,6 +44,22 @@ if(NOT EXISTS ${SDL_TTF_SOURCE_DIR})
     )
 endif()
 
+set(SDL_IMAGE_VERSION "2.8.2")
+set(SDL_IMAGE_SOURCE_DIR "${VENDOR_DIR}/SDL2_image-${SDL_IMAGE_VERSION}")
+
+if(NOT EXISTS ${SDL_IMAGE_SOURCE_DIR})
+    set(SDL_IMAGE_URL "https://github.com/libsdl-org/SDL_image/releases/download/release-${SDL_IMAGE_VERSION}/SDL2_image-${SDL_IMAGE_VERSION}.tar.gz")
+    set(SDL_IMAGE_ARCHIVE "${CMAKE_BINARY_DIR}/sdlimage.tar.gz")
+
+    message(STATUS "SDL Image not found. Downloading ${SDL_IMAGE_URL}")
+    file(DOWNLOAD ${SDL_IMAGE_URL} ${SDL_IMAGE_ARCHIVE})
+
+    execute_process(
+        COMMAND ${CMAKE_COMMAND} -E tar xzf ${SDL_IMAGE_ARCHIVE}
+        WORKING_DIRECTORY ${VENDOR_DIR}
+    )
+endif()
+
 set(JSON_HEADER "vendor/nlohmann/json.hpp")
 if(NOT EXISTS ${JSON_HEADER})
     set(JSON_URL "https://github.com/nlohmann/json/releases/download/v3.11.2/json.hpp")
@@ -53,5 +69,6 @@ endif()
 
 add_subdirectory(${SDL_SOURCE_DIR} ${CMAKE_BINARY_DIR}/SDL_build)
 add_subdirectory(${SDL_TTF_SOURCE_DIR} ${CMAKE_BINARY_DIR}/SDL_TTF_build)
-include_directories(BEFORE . ${VENDOR_DIR} ${SDL_SOURCE_DIR}/include ${SDL_TTF_SOURCE_DIR})
+add_subdirectory(${SDL_IMAGE_SOURCE_DIR} ${CMAKE_BINARY_DIR}/SDL_IMAGE_build)
+include_directories(BEFORE . ${VENDOR_DIR} ${SDL_SOURCE_DIR}/include ${SDL_TTF_SOURCE_DIR} ${SDL_IMAGE_SOURCE_DIR}/include)
 

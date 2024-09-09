@@ -12,18 +12,30 @@ public:
     Game();
     ~Game();
     void Run();
-    std::unique_ptr<Scene> _currentScene;
 
     bool isRunning = false;
     Window _window;
     Renderer renderer;
 
-    void initialize() {
-        if (TTF_Init() != 0) {
-            log::out("TTF_Init");
-            SDL_Quit();
+    void AddScene(std::unique_ptr<Scene> scene) {
+        if (scenes.empty()) {
+            _currentScene = scene->_name;
         }
+        scenes[scene->_name] = std::move(scene);
     }
+
+    Scene *CurrentScene() const {
+        auto it = scenes.find(_currentScene);
+        return it->second.get();
+    }
+
+    void SetCurrentScene(const std::string &name) {
+        _currentScene = name;
+    }
+
+private:
+    std::string _currentScene;
+    std::unordered_map<std::string, std::unique_ptr<Scene>> scenes;
 };
 
 } // namespace core

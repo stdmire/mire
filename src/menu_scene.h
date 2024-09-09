@@ -21,6 +21,9 @@ public:
             label->SetPosition(core::Vector2(300, 100));
         });
 
+        auto sprite = std::make_shared<core::Sprite>();
+
+        PushObject(sprite);
         PushObject(btn);
         PushObject(label);
         PushObject(input);

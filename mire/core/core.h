@@ -11,6 +11,7 @@
 #include "rect.h"
 #include "renderer.h"
 #include "scene.h"
+#include "sprite.h"
 #include "texture.h"
 #include "utils.h"
 #include "vector.h"

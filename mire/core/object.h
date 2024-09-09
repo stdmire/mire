@@ -3,6 +3,7 @@
 #include "renderer.h"
 #include "vector.h"
 #include <SDL.h>
+#include <SDL_image.h>
 
 namespace core {
 class BaseObject {

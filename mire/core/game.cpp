@@ -7,11 +7,14 @@ namespace core {
 Game::Game() :
         _window(1920, 1080, "MIRE Example"), renderer(_window) {
     SDL_SetWindowResizable(_window.window.get(), SDL_TRUE);
+    IMG_Init(IMG_INIT_PNG);
     SDL_MaximizeWindow(_window.window.get());
-    SDL_ShowCursor(SDL_ENABLE);
 
     log::info("Initializing game");
-    initialize();
+    if (TTF_Init() != 0) {
+        log::out("TTF_Init");
+        SDL_Quit();
+    }
 }
 
 Game::~Game() {
@@ -23,7 +26,8 @@ void Game::Run() {
 
     log::info("running engine");
 
-    _currentScene->Initialize(renderer);
+    auto currentscene = CurrentScene();
+    currentscene->Initialize(renderer);
     SDL_EventState(SDL_TEXTINPUT, SDL_DISABLE);
 
     SDL_Event event;
@@ -32,39 +36,39 @@ void Game::Run() {
             if (event.type == SDL_QUIT)
                 isRunning = false;
 
-            _currentScene->OnEventUpdate(event);
+            currentscene->OnEventUpdate(event);
 
             if (event.type == SDL_MOUSEBUTTONDOWN) {
                 int x, y = 2;
                 SDL_GetMouseState(&x, &y);
 
-                _currentScene->OnMouseClick(x, y);
+                currentscene->OnMouseClick(x, y);
             }
 
             if (event.type == SDL_MOUSEBUTTONUP) {
                 int x, y = 2;
                 SDL_GetMouseState(&x, &y);
 
-                _currentScene->OnMouseClickReleased(x, y);
+                currentscene->OnMouseClickReleased(x, y);
             }
 
             if (SDL_GetEventState(SDL_TEXTINPUT) == SDL_DISABLE) {
                 if (event.type == SDL_KEYDOWN) {
-                    _currentScene->OnKeyPressed((Key)event.key.keysym.sym);
+                    currentscene->OnKeyPressed((Key)event.key.keysym.sym);
                 }
             }
 
             if (event.type == SDL_KEYUP) {
-                _currentScene->OnKeyReleased((Key)event.key.keysym.sym);
+                currentscene->OnKeyReleased((Key)event.key.keysym.sym);
             }
         }
         SDL_SetRenderDrawColor(renderer.getRenderer(), COLOR_Slate50.getR(), COLOR_Slate50.getG(), COLOR_Slate50.getB(), COLOR_Slate50.getA());
         // log::out(COLOR_Slate50.getR(), COLOR_Slate50.getG(), COLOR_Slate50.getB(), COLOR_Slate50.getA());
         renderer.clear();
 
-        _currentScene->OnUpdate();
+        currentscene->OnUpdate();
 
-        _currentScene->Render(renderer);
+        currentscene->Render(renderer);
         renderer.present();
         SDL_Delay(16);
     }

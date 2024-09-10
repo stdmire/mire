@@ -33,8 +33,9 @@ void Game::Run() {
     SDL_Event event;
     while (isRunning) {
         while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT)
+            if (event.type == SDL_QUIT) {
                 isRunning = false;
+            }
 
             currentscene->OnEventUpdate(event);
 

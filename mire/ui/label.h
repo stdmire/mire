@@ -35,12 +35,13 @@ public:
 
     void Render(const core::Renderer &renderer) override {
         // log::out("meki");
-        SDL_Surface *surf = TTF_RenderText_Blended(font.GetFont(), _text.c_str(), {
-                                                                                          (unsigned char)core::COLOR_Slate800.getR(),
-                                                                                          (unsigned char)core::COLOR_Slate800.getG(),
-                                                                                          (unsigned char)core::COLOR_Slate800.getB(),
-                                                                                          (unsigned char)core::COLOR_Slate800.getA(),
-                                                                                  });
+        SDL_Surface *surf = TTF_RenderText_Blended(
+                font.GetFont(), _text.c_str(), {
+                                                       (unsigned char)core::COLOR_Slate800.getR(),
+                                                       (unsigned char)core::COLOR_Slate800.getG(),
+                                                       (unsigned char)core::COLOR_Slate800.getB(),
+                                                       (unsigned char)core::COLOR_Slate800.getA(),
+                                               });
         if (surf == nullptr) {
             log::info("ERROR TTF_RenderText_Blended");
             log::err(SDL_GetError());

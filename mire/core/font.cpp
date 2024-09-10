@@ -3,7 +3,7 @@
 #include "utils.h"
 
 namespace core {
-auto FontDeleter = [](TTF_Font *font) {
+const auto FontDeleter = [](TTF_Font *font) {
     if (font) {
         TTF_CloseFont(font);
     }

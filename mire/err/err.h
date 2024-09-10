@@ -29,6 +29,19 @@ public:
     }
 };
 
+class SDL : public std::exception {
+private:
+    std::string errorMessage;
+
+public:
+    explicit SDL(const std::string &message) :
+            errorMessage(message) {}
+
+    const char *what() const noexcept override {
+        return errorMessage.c_str();
+    }
+};
+
 class InvalidFileType : public std::invalid_argument {
 public:
     InvalidFileType() :

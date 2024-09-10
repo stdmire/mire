@@ -1,6 +1,8 @@
 #pragma once
 
+#include "SDL_rect.h"
 #include "core/core.h" // IWYU pragma: keep
+#include "core/texture.h"
 #include <SDL2/SDL.h>
 #include <SDL_ttf.h>
 
@@ -14,9 +16,7 @@ public:
         TTF_SizeText(font.GetFont(), _text.c_str(), &width, &height);
         rect.setWidth(width);
         rect.setHeight(height);
-        sdlrect = SDL_Rect{
-            int(rect.pos.x), int(rect.pos.y), rect.getWidth(), rect.getHeight()
-        };
+        UpdateTexture();
     }
 
     void setText(const std::string &text) {
@@ -24,9 +24,7 @@ public:
         TTF_SizeText(font.GetFont(), _text.c_str(), &width, &height);
         rect.setWidth(width);
         rect.setHeight(height);
-        sdlrect = SDL_Rect{
-            int(rect.pos.x), int(rect.pos.y), rect.getWidth(), rect.getHeight()
-        };
+        UpdateTexture();
     }
 
     const std::string &getText() {
@@ -34,61 +32,35 @@ public:
     }
 
     void Render(const core::Renderer &renderer) override {
-        // log::out("meki");
-        SDL_Surface *surf = TTF_RenderText_Blended(
-                font.GetFont(), _text.c_str(), {
-                                                       (unsigned char)core::COLOR_Slate800.getR(),
-                                                       (unsigned char)core::COLOR_Slate800.getG(),
-                                                       (unsigned char)core::COLOR_Slate800.getB(),
-                                                       (unsigned char)core::COLOR_Slate800.getA(),
-                                               });
-        if (surf == nullptr) {
-            log::info("ERROR TTF_RenderText_Blended");
-            log::err(SDL_GetError());
+        if (textureupdated) {
+            texture.UpdateTexture(renderer);
+            textureupdated = false;
         }
-
-        SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer.getRenderer(), surf);
-        if (texture == nullptr) {
-            log::info("ERROR SDL_CreateTextureFromSurface");
-            log::err(SDL_GetError());
-        }
-        SDL_RenderCopy(renderer.getRenderer(), texture, NULL, &sdlrect);
-        SDL_FreeSurface(surf);
+        sdlrect = rect.toSDLRect();
+        SDL_RenderCopy(renderer.getRenderer(), texture.GetTexture(), NULL, &sdlrect);
     };
 
     void SetPosition(const core::Vector2 &pos) {
         rect.pos = pos;
-        sdlrect = {
-            int(rect.pos.x),
-            int(rect.pos.y),
-            rect.getWidth(),
-            rect.getHeight(),
-        };
     }
 
     void Move(const core::Vector2 &dir) {
         rect.pos = rect.pos + dir;
-        sdlrect = {
-            int(rect.pos.x),
-            int(rect.pos.y),
-            rect.getWidth(),
-            rect.getHeight(),
-        };
     }
 
     core::Font font;
     core::Color color;
 
 private:
+    void UpdateTexture() {
+        texture.UpdateSurface(font, color, _text);
+        textureupdated = true;
+    }
     std::string _text;
     int width, height;
+    core::FontTexture texture;
+    bool textureupdated = false;
     SDL_Rect sdlrect;
-
-    void setRect() {
-        sdlrect = SDL_Rect{
-            int(rect.pos.x), int(rect.pos.y), rect.getWidth(), rect.getHeight()
-        };
-    }
-}; // namespace ui
+};
 
 } // namespace ui

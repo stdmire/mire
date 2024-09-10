@@ -21,6 +21,7 @@ public:
         if (scenes.empty()) {
             _currentScene = scene->_name;
         }
+        scene->Initialize(renderer);
         scenes[scene->_name] = std::move(scene);
     }
 

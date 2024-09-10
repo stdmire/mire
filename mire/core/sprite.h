@@ -8,15 +8,18 @@ class Sprite : public BaseObject {
 public:
     Sprite() :
             BaseObject("sprite") {
-        rect.pos.x = 200;
-        rect.pos.x = 100;
-
         fullpath = "/Users/amarps/Code/mire/assets/bird.png";
     }
 
     void OnInit(const Renderer &r) override {
         texture = IMG_LoadTexture(r.getRenderer(), fullpath.c_str());
         SDL_QueryTexture(texture, nullptr, nullptr, &textWidth, &textHeight);
+        if (!rect.getWidth()) {
+            rect.setWidth(textWidth);
+        }
+        if (!rect.getHeight()) {
+            rect.setHeight(textHeight);
+        }
     }
 
     void Render(const core::Renderer &r) override {

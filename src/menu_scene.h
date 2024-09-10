@@ -22,6 +22,8 @@ public:
         });
 
         auto sprite = std::make_shared<core::Sprite>();
+        sprite->rect.pos.x = 300;
+        sprite->rect.pos.y = 300;
 
         PushObject(sprite);
         PushObject(btn);

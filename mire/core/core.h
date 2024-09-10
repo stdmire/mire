@@ -1,18 +1,18 @@
 #pragma once
 
-#include "color.h"
-#include "control.h"
-#include "core.h"
-#include "font.h"
-#include "game.h"
-#include "layer.h"
-#include "log.h"
-#include "object.h"
-#include "rect.h"
-#include "renderer.h"
-#include "scene.h"
-#include "sprite.h"
-#include "texture.h"
-#include "utils.h"
-#include "vector.h"
-#include "window.h"
+#include "color.h" // IWYU pragma: keep
+#include "control.h" // IWYU pragma: keep
+#include "core.h" // IWYU pragma: keep
+#include "font.h" // IWYU pragma: keep
+#include "game.h" // IWYU pragma: keep
+#include "layer.h" // IWYU pragma: keep
+#include "log.h" // IWYU pragma: keep
+#include "object.h" // IWYU pragma: keep
+#include "rect.h" // IWYU pragma: keep
+#include "renderer.h" // IWYU pragma: keep
+#include "scene.h" // IWYU pragma: keep
+#include "sprite.h" // IWYU pragma: keep
+#include "texture.h" // IWYU pragma: keep
+#include "utils.h" // IWYU pragma: keep
+#include "vector.h" // IWYU pragma: keep
+#include "window.h" // IWYU pragma: keep

@@ -48,8 +48,8 @@ void Rect::move(const Vector2 &dir) {
 
 // Scale the rectangle size by a factor
 void Rect::scale(float factor) {
-    width = static_cast<int>(width * factor);
-    height = static_cast<int>(height * factor);
+    width = static_cast<int>(float(width) * factor);
+    height = static_cast<int>(float(height) * factor);
 }
 
 // Equality operator

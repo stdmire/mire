@@ -30,7 +30,13 @@ public:
         PushObject(label);
         PushObject(input);
     }
-    ~MenuScene() {
+    MenuScene(const MenuScene &) = default;
+    MenuScene(MenuScene &&) = delete;
+    auto operator=(const MenuScene &) -> MenuScene & = default;
+    auto operator=(MenuScene &&) -> MenuScene & = delete;
+    MenuScene(std::shared_ptr<ui::Label> label, std::shared_ptr<ui::Input> input, std::shared_ptr<ui::Button> btn, core::Vector2 dir) :
+            label(std::move(label)), input(std::move(input)), btn(std::move(btn)), dir(dir) {}
+    virtual ~MenuScene() {
 
     };
 

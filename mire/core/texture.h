@@ -1,18 +1,17 @@
 #pragma once
 
 #include "object.h"
-#include "renderer.h"
 #include <SDL.h>
 #include <memory>
 
-auto TextureDeleter = [](SDL_Texture *texture) {
-    if (texture) {
+const auto TextureDeleter = [](SDL_Texture *texture) {
+    if (texture != nullptr) {
         SDL_DestroyTexture(texture);
     }
 };
 
-auto SurfaceDeleter = [](SDL_Surface *surface) {
-    if (surface) {
+const auto SurfaceDeleter = [](SDL_Surface *surface) {
+    if (surface != nullptr) {
         SDL_FreeSurface(surface);
     }
 };

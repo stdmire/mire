@@ -60,6 +60,23 @@ if(NOT EXISTS ${SDL_IMAGE_SOURCE_DIR})
     )
 endif()
 
+
+set(SDL_MIXER_VERSION "2.8.0")
+set(SDL_MIXER_SOURCE_DIR "${VENDOR_DIR}/SDL2_mixer-${SDL_MIXER_VERSION}")
+
+if(NOT EXISTS ${SDL_MIXER_SOURCE_DIR})
+    set(SDL_MIXER_URL "https://github.com/libsdl-org/SDL_mixer/releases/download/release-${SDL_MIXER_VERSION}/SDL2_mixer-${SDL_MIXER_VERSION}.tar.gz")
+    set(SDL_MIXER_ARCHIVE "${CMAKE_BINARY_DIR}/sdlmixer.tar.gz")
+
+    message(STATUS "SDL Mixer not found. Downloading ${SDL_MIXER_URL}")
+    file(DOWNLOAD ${SDL_MIXER_URL} ${SDL_MIXER_ARCHIVE})
+
+    execute_process(
+        COMMAND ${CMAKE_COMMAND} -E tar xzf ${SDL_MIXER_ARCHIVE}
+        WORKING_DIRECTORY ${VENDOR_DIR}
+    )
+endif()
+
 set(JSON_HEADER "vendor/nlohmann/json.hpp")
 if(NOT EXISTS ${JSON_HEADER})
     set(JSON_URL "https://github.com/nlohmann/json/releases/download/v3.11.2/json.hpp")
@@ -70,5 +87,6 @@ endif()
 add_subdirectory(${SDL_SOURCE_DIR} ${CMAKE_BINARY_DIR}/SDL_build)
 add_subdirectory(${SDL_TTF_SOURCE_DIR} ${CMAKE_BINARY_DIR}/SDL_TTF_build)
 add_subdirectory(${SDL_IMAGE_SOURCE_DIR} ${CMAKE_BINARY_DIR}/SDL_IMAGE_build)
-include_directories(BEFORE . ${VENDOR_DIR} ${SDL_SOURCE_DIR}/include ${SDL_TTF_SOURCE_DIR} ${SDL_IMAGE_SOURCE_DIR}/include)
+add_subdirectory(${SDL_MIXER_SOURCE_DIR} ${CMAKE_BINARY_DIR}/SDL_MIXER_build)
+include_directories(BEFORE . ${VENDOR_DIR} ${SDL_SOURCE_DIR}/include ${SDL_TTF_SOURCE_DIR} ${SDL_IMAGE_SOURCE_DIR}/include ${SDL_MIXER_SOURCE_DIR}/include)
 

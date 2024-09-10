@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/core.h"
+#include "core/core.h" // IWYU pragma: keep
 #include <SDL2/SDL.h>
 #include <SDL_ttf.h>
 
@@ -41,13 +41,13 @@ public:
                                                                                           (unsigned char)core::COLOR_Slate800.getB(),
                                                                                           (unsigned char)core::COLOR_Slate800.getA(),
                                                                                   });
-        if (!surf) {
+        if (surf == nullptr) {
             log::info("ERROR TTF_RenderText_Blended");
             log::err(SDL_GetError());
         }
 
         SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer.getRenderer(), surf);
-        if (!texture) {
+        if (texture == nullptr) {
             log::info("ERROR SDL_CreateTextureFromSurface");
             log::err(SDL_GetError());
         }

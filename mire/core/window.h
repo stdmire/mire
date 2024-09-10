@@ -23,8 +23,8 @@ public:
         window.reset(SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN));
     };
 
-    const unsigned int width, height;
-    const std::string title;
+    unsigned int width, height;
+    std::string title;
 
 private:
     std::unique_ptr<SDL_Window, SDL_Window_Deleter> window;

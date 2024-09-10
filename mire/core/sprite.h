@@ -1,6 +1,7 @@
 #pragma once
 
 #include "object.h"
+#include "utils.h"
 #include <SDL_image.h>
 
 namespace core {
@@ -8,7 +9,7 @@ class Sprite : public BaseObject {
 public:
     Sprite() :
             BaseObject("sprite") {
-        fullpath = "/Users/amarps/Code/mire/assets/bird.png";
+        fullpath = core::GetFullPath("assets/bird.png");
     }
 
     void OnInit(const Renderer &r) override {

@@ -39,14 +39,16 @@ void Game::Run() {
             currentscene->OnEventUpdate(event);
 
             if (event.type == SDL_MOUSEBUTTONDOWN) {
-                int x, y = 2;
+                int x = 0;
+                int y = 0;
                 SDL_GetMouseState(&x, &y);
 
                 currentscene->OnMouseClick(x, y);
             }
 
             if (event.type == SDL_MOUSEBUTTONUP) {
-                int x, y = 2;
+                int x = 0;
+                int y = 0;
                 SDL_GetMouseState(&x, &y);
 
                 currentscene->OnMouseClickReleased(x, y);

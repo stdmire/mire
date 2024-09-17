@@ -26,53 +26,11 @@ void Game::Run() {
 
     log::info("running engine");
 
-    auto currentscene = CurrentScene();
-    currentscene->Initialize(renderer);
     SDL_EventState(SDL_TEXTINPUT, SDL_DISABLE);
 
-    SDL_Event event;
     while (isRunning) {
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
-                isRunning = false;
-            }
-
-            currentscene->OnEventUpdate(event);
-
-            if (event.type == SDL_MOUSEBUTTONDOWN) {
-                int x = 0;
-                int y = 0;
-                SDL_GetMouseState(&x, &y);
-
-                currentscene->OnMouseClick(x, y);
-            }
-
-            if (event.type == SDL_MOUSEBUTTONUP) {
-                int x = 0;
-                int y = 0;
-                SDL_GetMouseState(&x, &y);
-
-                currentscene->OnMouseClickReleased(x, y);
-            }
-
-            if (SDL_GetEventState(SDL_TEXTINPUT) == SDL_DISABLE) {
-                if (event.type == SDL_KEYDOWN) {
-                    currentscene->OnKeyPressed((Key)event.key.keysym.sym);
-                }
-            }
-
-            if (event.type == SDL_KEYUP) {
-                currentscene->OnKeyReleased((Key)event.key.keysym.sym);
-            }
-        }
-        SDL_SetRenderDrawColor(renderer.getRenderer(), COLOR_Slate50.getR(), COLOR_Slate50.getG(), COLOR_Slate50.getB(), COLOR_Slate50.getA());
-        renderer.clear();
-
-        currentscene->OnUpdate();
-
-        currentscene->Render(renderer);
-        renderer.present();
-        SDL_Delay(16);
+        EventLoop();
+        RenderScene();
     }
 }
 } // namespace core

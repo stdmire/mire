@@ -18,25 +18,76 @@ public:
     Renderer renderer;
 
     void AddScene(std::unique_ptr<Scene> scene) {
+        auto isSceneEmpty = false;
+        auto sceneName = scene->_name;
         if (scenes.empty()) {
-            _currentScene = scene->_name;
+            isSceneEmpty = true;
         }
         scene->Initialize(renderer);
         scenes[scene->_name] = std::move(scene);
-    }
-
-    Scene *CurrentScene() const {
-        auto it = scenes.find(_currentScene);
-        return it->second.get();
+        SetCurrentScene(sceneName);
     }
 
     void SetCurrentScene(const std::string &name) {
-        _currentScene = name;
+        _currentSceneName = name;
+
+        auto it = scenes.find(_currentSceneName);
+        m_currentScene = it->second.get();
+        m_currentScene->Initialize(renderer);
+    }
+
+    void EventLoop() {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                isRunning = false;
+            }
+
+            m_currentScene->OnEventUpdate(event);
+
+            if (event.type == SDL_MOUSEBUTTONDOWN) {
+                int x = 0;
+                int y = 0;
+                SDL_GetMouseState(&x, &y);
+
+                m_currentScene->OnMouseClick(x, y);
+            }
+
+            if (event.type == SDL_MOUSEBUTTONUP) {
+                int x = 0;
+                int y = 0;
+                SDL_GetMouseState(&x, &y);
+
+                m_currentScene->OnMouseClickReleased(x, y);
+            }
+
+            if (SDL_GetEventState(SDL_TEXTINPUT) == SDL_DISABLE) {
+                if (event.type == SDL_KEYDOWN) {
+                    m_currentScene->OnKeyPressed((Key)event.key.keysym.sym);
+                }
+            }
+
+            if (event.type == SDL_KEYUP) {
+                m_currentScene->OnKeyReleased((Key)event.key.keysym.sym);
+            }
+        }
+    }
+
+    void RenderScene() {
+        SDL_SetRenderDrawColor(renderer.getRenderer(), COLOR_Slate50.getR(), COLOR_Slate50.getG(), COLOR_Slate50.getB(), COLOR_Slate50.getA());
+        renderer.clear();
+
+        m_currentScene->OnUpdate();
+
+        m_currentScene->Render(renderer);
+        renderer.present();
+        SDL_Delay(16);
     }
 
 private:
-    std::string _currentScene;
+    Scene *m_currentScene;
+    std::string _currentSceneName;
     std::unordered_map<std::string, std::unique_ptr<Scene>> scenes;
+    SDL_Event event;
 };
 
 } // namespace core

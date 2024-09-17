@@ -10,18 +10,22 @@ const auto FontDeleter = [](TTF_Font *font) {
 };
 
 Font::Font(const std::string &filePath, int fontSize) :
-        _filePath(filePath), _fontSize(fontSize), _font(nullptr, FontDeleter) {
-    _fullfilepath = core::GetFullPath(_filePath.c_str());
+        file(filePath), _fontSize(fontSize), _font(nullptr, FontDeleter) {
+    log::out("@@@@@@@@@@@@@@@@@@@@@@@1");
+    log::out(file.FullPath());
     if (!LoadFont()) {
-        log::out("Failed to load font: ", _fullfilepath, " with size: ", _fontSize);
+        log::out("Failed to load font: ", file.FullPath(), " with size: ", _fontSize);
     }
 }
 
 Font::Font() :
-        _filePath(DEFAULT_FONT_PATH), _fontSize(DEFAULT_FONT_SIZE), _font(nullptr, FontDeleter) {
-    _fullfilepath = core::GetFullPath(_filePath.c_str());
+        file(DEFAULT_FONT_PATH), _fontSize(DEFAULT_FONT_SIZE), _font(nullptr, FontDeleter) {
+
+    log::out("@@@@@@@@@@@@@@@@@@@@@@@");
+    log::out(file.FullPath());
+    log::out(DEFAULT_FONT_PATH);
     if (!LoadFont()) {
-        log::out("Failed to load font: ", _fullfilepath, " with size: ", _fontSize, "full path:", _fullfilepath);
+        log::out("Failed to load font: ", file.FullPath(), " with size: ", _fontSize);
     }
 }
 
@@ -39,7 +43,7 @@ void Font::SetFontSize(int fontSize) {
 }
 
 bool Font::LoadFont() {
-    _font.reset(TTF_OpenFont(_fullfilepath.c_str(), _fontSize));
+    _font.reset(TTF_OpenFont(file.FullPath().c_str(), _fontSize));
     if (_font == nullptr) {
         log::out(TTF_GetError());
     }

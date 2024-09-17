@@ -21,7 +21,7 @@ public:
             label->SetPosition(core::Vector2(300, 100));
         });
 
-        auto sprite = std::make_shared<core::Sprite>();
+        auto sprite = std::make_shared<core::Sprite>("assets/bird.png");
         sprite->rect.pos.x = 300;
         sprite->rect.pos.y = 300;
 
@@ -78,6 +78,7 @@ public:
             label->Move(dir);
         }
     }
+
     void OnEventUpdate(SDL_Event event) override {
         input->OnTypeHandler(event);
     }

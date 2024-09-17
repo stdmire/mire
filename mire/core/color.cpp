@@ -4,7 +4,7 @@
 namespace core {
 
 Color::Color() :
-        r(0), g(0), b(0), a(255) {}
+        r(211), g(211), b(211), a(255) {}
 
 Color::Color(unsigned int r, unsigned int g, unsigned int b, unsigned int a) {
     setR(r);

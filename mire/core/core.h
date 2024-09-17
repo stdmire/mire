@@ -3,6 +3,7 @@
 #include "color.h" // IWYU pragma: keep
 #include "control.h" // IWYU pragma: keep
 #include "core.h" // IWYU pragma: keep
+#include "file.h" // IWYU pragma: keep
 #include "font.h" // IWYU pragma: keep
 #include "game.h" // IWYU pragma: keep
 #include "layer.h" // IWYU pragma: keep

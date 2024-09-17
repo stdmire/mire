@@ -1,14 +1,19 @@
 #pragma once
 
-#include "SDL_image.h"
+#include "SDL_events.h"
 #include "SDL_render.h"
 #include "core/color.h"
 #include "core/file.h"
 #include "core/font.h"
+#include "core/log.h"
+#include "core/vector.h"
 #include "err/err.h"
 #include "object.h"
 #include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_render.h>
 #include <memory>
+#include <tuple>
 
 const auto TextureDeleter = [](SDL_Texture *texture) {
     if (texture != nullptr) {
@@ -56,10 +61,10 @@ protected:
     File file;
 };
 
-class FontTexture : public TextureBase {
+class TextureFont : public TextureBase {
 public:
-    FontTexture() {}
-    FontTexture(const std::string &path) :
+    TextureFont() {}
+    TextureFont(const std::string &path) :
             TextureBase(path) {
     }
 
@@ -84,6 +89,39 @@ public:
             log::info("ERROR SDL_CreateTextureFromSurface");
             throw err::SDL(SDL_GetError());
         }
+    }
+};
+
+class TextureImage : public TextureBase {
+public:
+    TextureImage() {}
+    TextureImage(const std::string &path) :
+            TextureBase(path) {}
+
+    void UpdateSurface() {
+        surface.reset(IMG_Load(file.FullPath().c_str()));
+        if (surface == nullptr) {
+            log::info("ERROR SDL_CreateTextureFromSurface");
+            throw err::SDL(IMG_GetError());
+        }
+    }
+
+    void UpdateTexture(const core::Renderer &renderer) {
+        texture.reset(SDL_CreateTextureFromSurface(renderer.getRenderer(), surface.get()));
+        if (texture == nullptr) {
+            log::info("ERROR SDL_CreateTextureFromSurface");
+            throw err::SDL(SDL_GetError());
+        }
+
+        SDL_QueryTexture(texture.get(), nullptr, nullptr, &width, &height);
+    }
+
+    int GetWidth() {
+        return width;
+    }
+
+    int GetHeight() {
+        return height;
     }
 };
 

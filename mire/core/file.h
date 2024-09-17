@@ -1,5 +1,6 @@
 #pragma once
 
+#include "log.h"
 #include <filesystem>
 #include <string>
 #include <unordered_map>
@@ -16,11 +17,11 @@ enum E_FileType {
 class File {
 public:
     File(std::string path) :
-            m_assignedpath(std::move(path)) {
-        Load(path);
+            m_assignedpath(path) {
+        Load(m_assignedpath);
     }
 
-    File() = default;
+    File() {};
 
     void Load(std::string path) {
         m_assignedpath = path;
@@ -29,6 +30,9 @@ public:
 #define STRING(str) STR(str)
         m_fullpath = std::string(STRING(ROOT_DIR)) + std::string(path);
 #endif
+        log::out("###################");
+        log::out(path);
+        log::out(m_fullpath);
         if (m_fullpath.empty()) {
             m_fullpath = path;
         }
@@ -37,7 +41,7 @@ public:
 
         m_name = m_path.filename();
         m_extension = m_path.extension();
-        m_filetype = CheckFileType(m_extension);
+        m_filetype = File::CheckFileType(m_extension);
     }
 
     const std::string &Name() {
@@ -60,19 +64,19 @@ public:
         return m_filetype;
     }
 
-    static E_FileType CheckFileType(const std::string &ext) {
-        if (supportedFileType.empty()) {
-            supportedFileType["png"] = File_Image;
-            supportedFileType["jpg"] = File_Image;
+    E_FileType CheckFileType(const std::string &ext) {
+        if (File::supportedFileType.empty()) {
+            File::supportedFileType["png"] = File_Image;
+            File::supportedFileType["jpg"] = File_Image;
 
-            supportedFileType["ttf"] = File_Font;
+            File::supportedFileType["ttf"] = File_Font;
 
-            supportedFileType["wav"] = File_Audio;
-            supportedFileType["ogg"] = File_Audio;
+            File::supportedFileType["wav"] = File_Audio;
+            File::supportedFileType["ogg"] = File_Audio;
         }
 
-        auto it = supportedFileType.find(ext);
-        if (it == supportedFileType.end()) {
+        auto it = File::supportedFileType.find(ext);
+        if (it == File::supportedFileType.end()) {
             return File_Unknown;
         }
         return it->second;
@@ -85,6 +89,6 @@ private:
     std::filesystem::path m_path;
     std::string m_extension;
     E_FileType m_filetype;
-    static std::unordered_map<std::string, E_FileType> supportedFileType;
+    std::unordered_map<std::string, E_FileType> supportedFileType;
 };
 } // namespace core

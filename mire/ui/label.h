@@ -1,9 +1,10 @@
 #pragma once
 
 #include "SDL_rect.h"
+#include "core/color.h"
 #include "core/core.h" // IWYU pragma: keep
 #include "core/texture.h"
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <SDL_ttf.h>
 
 namespace ui {
@@ -12,7 +13,8 @@ class Label : public core::BaseObject {
 public:
     Label(std::string text) :
             BaseObject("label"),
-            _text(text) {
+            _text(text),
+            color(core::COLOR_Slate600) {
         TTF_SizeText(font.GetFont(), _text.c_str(), &width, &height);
         rect.setWidth(width);
         rect.setHeight(height);
@@ -58,7 +60,7 @@ private:
     }
     std::string _text;
     int width, height;
-    core::FontTexture texture;
+    core::TextureFont texture;
     bool textureupdated = false;
     SDL_Rect sdlrect;
 };

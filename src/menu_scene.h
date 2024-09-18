@@ -1,6 +1,10 @@
 #pragma once
 
+#include "core/object.h"
+#include "core/rect.h"
+#include "core/vector.h"
 #include "mire.h"
+#include <memory>
 
 class MenuScene : public core::Scene {
 public:
@@ -9,6 +13,9 @@ public:
         label = std::make_shared<ui::Label>("Start Game");
         input = std::make_shared<ui::Input>("myinput");
         btn = std::make_shared<ui::Button>("btn");
+        auto platform = std::make_shared<core::Object2D>();
+
+        platform->setRect(core::Rect{ core::Vector2{ 0, 400 }, 1920, 20 });
 
         btn->SetPosition(core::Vector2(100, 100));
         btn->background.color = core::Color();
@@ -25,6 +32,7 @@ public:
         sprite->rect.pos.x = 300;
         sprite->rect.pos.y = 300;
 
+        PushObject(platform);
         PushObject(sprite);
         PushObject(btn);
         PushObject(label);

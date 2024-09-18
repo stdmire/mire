@@ -2,13 +2,13 @@
 
 #include "SDL_events.h"
 #include "SDL_render.h"
+#include "baseobject.h"
 #include "core/color.h"
 #include "core/file.h"
 #include "core/font.h"
 #include "core/log.h"
 #include "core/vector.h"
 #include "err/err.h"
-#include "object.h"
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_render.h>

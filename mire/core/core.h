@@ -1,5 +1,6 @@
 #pragma once
 
+#include "baseobject.h" // IWYU pragma: keep
 #include "color.h" // IWYU pragma: keep
 #include "control.h" // IWYU pragma: keep
 #include "core.h" // IWYU pragma: keep
@@ -9,6 +10,7 @@
 #include "layer.h" // IWYU pragma: keep
 #include "log.h" // IWYU pragma: keep
 #include "object.h" // IWYU pragma: keep
+#include "physic.h" // IWYU pragma: keep
 #include "rect.h" // IWYU pragma: keep
 #include "renderer.h" // IWYU pragma: keep
 #include "scene.h" // IWYU pragma: keep

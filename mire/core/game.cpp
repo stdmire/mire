@@ -6,7 +6,7 @@
 #include <SDL.h>
 namespace core {
 Game::Game() :
-        _window(960, 540, "MIRE Example"), renderer(_window) {
+        _window(1920, 1080, "MIRE Example"), renderer(_window) {
     SDL_SetWindowResizable(_window.window.get(), SDL_FALSE);
     IMG_Init(IMG_INIT_PNG);
     SDL_MaximizeWindow(_window.window.get());

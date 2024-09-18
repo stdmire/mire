@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/log.h"
+#include "core/physic.h"
 #include "core/rect.h"
 #include "object.h"
 #include "texture.h"
@@ -10,12 +11,13 @@ namespace core {
 class Sprite : public BaseObject {
 public:
     Sprite() :
-            BaseObject("sprite") {
+            BaseObject("sprite"), body(this) {
     }
 
     Sprite(const std::string &path) :
             BaseObject("sprite"),
-            texture(path) {
+            texture(path),
+            body(this) {
     }
 
     void OnInit(const Renderer &r) override {
@@ -26,6 +28,7 @@ public:
     }
 
     void Render(const core::Renderer &r) override {
+        body.Update(this);
         if (isTextureUpdated) {
             texture.UpdateTexture(r);
             isTextureUpdated = false;
@@ -47,6 +50,7 @@ private:
     bool isTextureUpdated = false;
     int textWidth;
     int textHeight;
+    Body body;
     TextureImage texture;
 };
 } // namespace core

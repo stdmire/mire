@@ -5,6 +5,7 @@
 
 #include <SDL.h>
 #include <SDL_ttf.h>
+
 namespace core {
 inline double deltatime = 0;
 class Game {
@@ -81,6 +82,10 @@ public:
         m_currentScene->Render(renderer);
         renderer.present();
         SDL_Delay(16);
+    }
+
+    void StopGame() {
+        isRunning = false;
     }
 
 private:

@@ -30,9 +30,6 @@ public:
 #define STRING(str) STR(str)
         m_fullpath = std::string(STRING(ROOT_DIR)) + std::string(path);
 #endif
-        log::out("###################");
-        log::out(path);
-        log::out(m_fullpath);
         if (m_fullpath.empty()) {
             m_fullpath = path;
         }

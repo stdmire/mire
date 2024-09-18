@@ -83,10 +83,14 @@ if(NOT EXISTS ${JSON_HEADER})
     message(STATUS "nlohmann/json not found. Downloading ${JSON_URL}...")
     file(DOWNLOAD ${JSON_URL} ${JSON_HEADER})
 endif()
+set(JSON_SOURCE_DIR "${VENDOR_DIR}/nlohmann")
 
 add_subdirectory(${SDL_SOURCE_DIR} ${CMAKE_BINARY_DIR}/SDL_build)
 add_subdirectory(${SDL_TTF_SOURCE_DIR} ${CMAKE_BINARY_DIR}/SDL_TTF_build)
 add_subdirectory(${SDL_IMAGE_SOURCE_DIR} ${CMAKE_BINARY_DIR}/SDL_IMAGE_build)
 add_subdirectory(${SDL_MIXER_SOURCE_DIR} ${CMAKE_BINARY_DIR}/SDL_MIXER_build)
-include_directories(BEFORE . ${VENDOR_DIR} ${SDL_SOURCE_DIR}/include ${SDL_TTF_SOURCE_DIR} ${SDL_IMAGE_SOURCE_DIR}/include ${SDL_MIXER_SOURCE_DIR}/include)
 
+target_link_libraries(mire PRIVATE SDL2::SDL2 SDL2::SDL2main SDL2_ttf SDL2_image SDL2_mixer)
+target_include_directories(mire PUBLIC "${JSON_SOURCE_DIR}" "${SDL_SOURCE_DIR}/include" "${SDL_TTF_SOURCE_DIR}" "${SDL_IMAGE_SOURCE_DIR}/include" "${SDL_MIXER_SOURCE_DIR}/include")
+
+include_directories(.)

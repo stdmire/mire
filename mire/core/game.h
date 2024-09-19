@@ -11,8 +11,12 @@ inline double deltatime = 0;
 class Game {
 public:
     Game();
+    Game(int resWidth, int resHeight, int winWidth, int winHeight);
     ~Game();
     void Run();
+
+    void Init();
+    void SetResolution(int width, int height) const;
 
     bool isRunning = false;
     Window _window;
